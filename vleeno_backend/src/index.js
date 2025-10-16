@@ -6,7 +6,9 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.get("/test", (req, res) => {
+app.get("/test/:userId", (req, res) => {
+    console.log(req.query);
+    console.log(req.params);
     res.send("This is a test route!");
 });
 
