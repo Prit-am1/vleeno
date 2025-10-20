@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const VLEENO_CLUSTER_URL = process.env.VLEENO_CLUSTER_URL;
 
 const connectDB = async () => {
   await mongoose.connect(
-    "mongodb+srv://pritam372_db_user:pIcvMegjs9bO9QAj@vleeno.zrqir5h.mongodb.net/vleeno"
+    VLEENO_CLUSTER_URL
   );
 };
 
