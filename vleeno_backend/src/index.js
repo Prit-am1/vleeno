@@ -7,7 +7,7 @@ const app = express();
 app.post("/signup", async (req, res) => {
   const userInfo = new User({
     name: "Pritam Roy Chowdhury",
-    email: "p@example.com",
+    email: "pritam@example.com",
     password: "pritam123",
     age: 32,
     gender: "Male",
