@@ -1,49 +1,32 @@
 import express from "express";
-import { adminAuth, userAuth } from "./Middleware/auth.js";
+import connectDB from "./config/database.js";
+import User from "./models/user.js";
 
 const app = express();
 
-app.use("/admin", adminAuth);
+app.post("/signup", async (req, res) => {
+  const userInfo = new User({
+    name: "Pritam Roy Chowdhury",
+    email: "Lk3Yg@example.com",
+    password: "pritam123",
+    age: 32,
+    gender: "Male",
+    isAdmin: false,
+  });
 
-app.use("/admin/access", (req, res, next) => {
-    res.send("Admin Access Granted!😀");
+  try {
+    await userInfo.save();
+    res.send("User created successfully");
+  } catch (err) {
+    res.status(400).send("User creation failed!😒");
+  }
 });
 
-app.use("/admin/data", (req, res, next) => {
-    res.send("Admin Data Fetched!😀");
-});
-
-app.use("/user", userAuth);
-
-app.use("/user/data", (req, res, next) => {
-    res.send("User Data Fetched!😀");
-});
-
-app.use("/user/access", (req, res, next) => {
-    res.send("User Access Granted!😀");
-});
-
-// app.get("/", (req, res) => {
-//     res.send("Hello World!");
-// });
-
-// app.get("/check", (req, res, next) => {
-//     res.send("This is check 1!");
-//     // next();
-// }, (req, res, next) => {
-//     // res.send("This is check 2!");
-//     next();
-// }, (req, res, next) => {
-//     // res.send("This is check 3!");
-//     next();
-// });
-
-// app.get("/test/:userId", (req, res) => {
-//     console.log(req.query);
-//     console.log(req.params);
-//     res.send("This is a test route!");
-// });
-
-app.listen(7777, () => {
-    console.log("Server is running on http://localhost:7777");
-});
+connectDB()
+  .then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(7777, () => {
+      console.log("Server is running on http://localhost:7777");
+    });
+  })
+  .catch(() => console.log("Something went wrong"));
