@@ -1,26 +1,18 @@
+// index.js
 import express from "express";
+import cors from "cors";
+import helmet from "helmet";
 import connectDB from "./config/database.js";
-import User from "./models/user.js";
+import userRouter from "./routes/usersRoute.js";
 
-const app = express();
+const app = express(); // create express app
+app.use(cors()); // enable CORS
+app.use(express.json({ limit: "10kb" })); // body parser
+app.use(helmet()); // set secure headers
 
-app.post("/signup", async (req, res) => {
-  const userInfo = new User({
-    name: "Pritam Roy Chowdhury",
-    email: "pritam@example.com",
-    password: "pritam123",
-    age: 32,
-    gender: "Male",
-    isAdmin: false,
-  });
+app.use("/api/users", userRouter); // user routes
 
-  try {
-    await userInfo.save();
-    res.send("User created successfully");
-  } catch (err) {
-    res.status(400).send("User creation failed!😒");
-  }
-});
+// connect to database and start server
 
 connectDB()
   .then(() => {
