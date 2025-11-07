@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", registerUser);
+router.post("/signup", registerUser);
 router.get("/", getAllUsers);
 router.get("/:id", getSingleUser);
 router.patch("/:id", updateSingleUser);
